@@ -100,6 +100,7 @@ entity ControlUnit is
 			sw_wSel				: out std_logic_vector(2 downto 0);
 			sw_ejectSel			: out std_logic_vector(2 downto 0);
 			sw_rnaCtFl			: in 	std_logic;
+			sw_rnaCtDeq			: out std_logic;
 			rna_ctrlPkt			: out std_logic_vector(cp_size-1 downto 0);
 			injt_ctrlPkt		: in 	std_logic_vector (cp_size-1 downto 0)
 		);
@@ -490,6 +491,7 @@ begin
 						next_state <= timer_check1;
 					end if;
 				when injection2 =>
+					sw_rnaCtDeq <= '1', '0' after 1 ns;		-- dequeue from switch
 					if(injt_ctrlPkt(6 downto 3) = router_address) then
 						next_state <= injection3;	--It's for me!
 					else
