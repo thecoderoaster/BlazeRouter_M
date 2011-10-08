@@ -517,7 +517,7 @@ begin
 					next_state <= timer_check1;
 				when injection6 =>
 					address <= injt_ctrlPkt(17 downto 14);
-					rte_data_out <= injt_ctrlPkt(32 downto 30);
+					rte_data_out <= injt_ctrlPkt(21 downto 19);
 					rte_en <= '1';
 					next_state <= timer_check1;
 				when injection7 =>
