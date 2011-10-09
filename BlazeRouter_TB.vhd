@@ -194,89 +194,89 @@ BEGIN
 		
 		wait for clk_period*20;
 		
---		--PAYLOAD = 0x0001 (PORT - East) : GID = 0x02 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000011" & "0010" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x03 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000101" & "0011" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0003 (PORT - West) : GID = 0x04 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000111" & "0100" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x05 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000101" & "0101" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0003 (PORT - West) : GID = 0x06 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000111" & "0110" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0000 (PORT - North) : GID = 0x07 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000001" & "0111" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0001 (PORT - East) : GID = 0x08	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000011" & "1000" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x09	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000101" & "1001" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0000 (PORT - North) : GID = 0x0A	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000001" & "1010" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0001 (PORT - East) : GID = 0x0B	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000011" & "1011" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x0C	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000101" & "1100" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0003 (PORT - West) : GID = 0x0D	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000111" & "1101" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x0E	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000101" & "1110" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
---		
---		--PAYLOAD = 0x0000 (PORT - North) : GID = 0x0F	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
---		injection_data <= "0000000000000001" & "1111" & "0001" & "000" & "0000" & "10" & "1";
---		injection_enq <= '1', '0' after 1 ns;
---		
---		wait for clk_period*20;
+		--PAYLOAD = 0x0001 (PORT - East) : GID = 0x02 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000011" & "0010" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x03 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000101" & "0011" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0003 (PORT - West) : GID = 0x04 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000111" & "0100" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x05 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000101" & "0101" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0003 (PORT - West) : GID = 0x06 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000111" & "0110" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0000 (PORT - North) : GID = 0x07 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000001" & "0111" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0001 (PORT - East) : GID = 0x08	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000011" & "1000" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x09	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000101" & "1001" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0000 (PORT - North) : GID = 0x0A	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000001" & "1010" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0001 (PORT - East) : GID = 0x0B	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000011" & "1011" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x0C	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000101" & "1100" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0003 (PORT - West) : GID = 0x0D	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000111" & "1101" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0002 (PORT - South) : GID = 0x0E	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000101" & "1110" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
+		
+		--PAYLOAD = 0x0000 (PORT - North) : GID = 0x0F	 (DST ADDRESS): PID = 0x01 (PKT ID) : DIR = 0x00 : ADDR = 0x00 (SRC ADDRESS) : COND = 0x01
+		injection_data <= "0000000000000001" & "1111" & "0001" & "000" & "0000" & "10" & "1";
+		injection_enq <= '1', '0' after 1 ns;
+		
+		wait for clk_period*20;
       wait;
    end process;
 
