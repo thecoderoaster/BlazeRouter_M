@@ -22,9 +22,40 @@
   <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="BlazeRouter_M.xise"/>
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_LSO" xil_pn:name=".lso"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="BlazeRouter.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="BlazeRouter.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="BlazeRouter.xst"/>
     <file xil_pn:fileType="FILE_NCD" xil_pn:name="BlazeRouter_guide.ncd" xil_pn:origination="imported"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="BlazeRouter_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
+    <file xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
   </files>
 
-  <transforms xmlns="http://www.xilinx.com/XMLSchema"/>
+  <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1318118247" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1318118247">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1318118247" xil_pn:in_ck="3074903485716901632" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1318118247">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="AddressLUT.vhd"/>
+      <outfile xil_pn:name="Arbiter.vhd"/>
+      <outfile xil_pn:name="BlazePackage.vhd"/>
+      <outfile xil_pn:name="BlazeRouter.vhd"/>
+      <outfile xil_pn:name="BlazeRouter_TB.vhd"/>
+      <outfile xil_pn:name="Buffer.vhd"/>
+      <outfile xil_pn:name="ControlUnit.vhd"/>
+      <outfile xil_pn:name="ReservationTable.vhd"/>
+      <outfile xil_pn:name="RoutingTable.vhd"/>
+      <outfile xil_pn:name="SchedulerTable.vhd"/>
+      <outfile xil_pn:name="SwitchUnit.vhd"/>
+      <outfile xil_pn:name="flow_control.vhd"/>
+      <outfile xil_pn:name="flow_controller_unit.vhd"/>
+      <outfile xil_pn:name="virtual_channel.vhd"/>
+    </transform>
+  </transforms>
 
 </generated_project>

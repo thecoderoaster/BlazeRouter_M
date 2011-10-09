@@ -411,7 +411,7 @@ begin
 									rnaSwWestSel,
 									rnaSwEjectSel,	
 									swRnaCtrlFlg,
-									
+									rnaiFifoDeq,
 									rnaSwCtrlPktO, -- Control packet generator output
 									swRnaCtrlPktI); -- Control packet from PE
 									
