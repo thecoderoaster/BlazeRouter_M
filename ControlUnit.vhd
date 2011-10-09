@@ -232,6 +232,8 @@ begin
 					sch_en <= '0';
 					adr_en <= '0';
 					
+					sw_rnaCtDeq <= '0';
+					
 					next_state <= north1;
 	--*NORTH*--
 				when north1 =>
@@ -491,7 +493,6 @@ begin
 						next_state <= timer_check1;
 					end if;
 				when injection2 =>
-					sw_rnaCtDeq <= '1', '0' after 1 ns;		-- dequeue from switch
 					if(injt_ctrlPkt(6 downto 3) = router_address) then
 						next_state <= injection3;	--It's for me!
 					else
@@ -506,6 +507,7 @@ begin
 						when "10" =>
 							next_state <= injection6;	-- Condition: PE is updating Routing Table
 						when others =>
+							sw_rnaCtDeq <= '1', '0' after 1 ns;		-- dequeue from FIFO
 							next_state <= timer_check1;	-- Condition: Unknown, move to next state.
 					end case;
 				when injection4 =>
@@ -516,11 +518,13 @@ begin
 					end if;
 				when injection5 =>
 					router_address <= injt_ctrlPkt(21 downto 18);
+					sw_rnaCtDeq <= '1', '0' after 1 ns;		-- dequeue from FIFO
 					next_state <= timer_check1;
 				when injection6 =>
 					address <= injt_ctrlPkt(17 downto 14);
 					rte_data_out <= injt_ctrlPkt(21 downto 19);
 					rte_en <= '1';
+					sw_rnaCtDeq <= '1', '0' after 1 ns;		-- dequeue from FIFO
 					next_state <= timer_check1;
 				when injection7 =>
 					--Forward the Packet by checking routing table first
@@ -562,6 +566,7 @@ begin
 					rsv_en <= '0';
 					sch_en <= '0';
 					adr_en <= '0';
+					sw_rnaCtDeq <= '1', '0' after 1 ns;				-- dequeue from FIFO
 					next_state <= timer_check1;	
 	--*TIMER_CHECK*--
 				when timer_check1 =>
