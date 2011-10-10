@@ -12,7 +12,7 @@ use ieee.std_logic_unsigned.all;
 package router_library is
 	--Universal constants Go Here (these are things that determine dimensions and can be changed on the fly)
 	constant WIDTH			: integer := 33;
-	constant SIZE			: integer := 10;
+	constant SIZE			: integer := 7;
 	constant LUT_SIZE 	: integer := 7;		--Start with 8 bits (move up eventually) (KVH)
 	
 	--Arbiter.vhd specific
@@ -36,7 +36,7 @@ package router_library is
 	
 	--Definition of a flit
 	subtype flit 		is std_logic_vector(WIDTH downto 0);	
-	type	fifoBuf		is array (0 to SIZE) of flit;
+	type	fifoBuf		is array (0 to 7) of flit;
 	type  t_ram 		is array (0 to 7) of flit;
 	
 	--Subtypes

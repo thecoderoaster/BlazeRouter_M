@@ -23,7 +23,6 @@
 --						Revision 0.05 - Fixed possible metastability bug (KM)
 --						Revision 0.06 - Added status request process (KM)
 --						Revision 0.07 - Added asynch status pins for linkcontrollers (KM)
---						Revision 0.08 - Verified operation with testbench holds 1 extra flit (KM)
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
@@ -54,7 +53,7 @@ end Fifo_mxn;
 architecture rtl of FIFO_MXN is
 
 	-- signals
-	signal 	hdCnt, tlCnt 				: integer range 0 to SIZE;
+	signal 	hdCnt, tlCnt 				: std_logic_vector (2 downto 0);
 	signal 	fifoReg						: fifoBuf;
 	signal 	full_flag, empty_flag	: std_logic;
 	signal 	need_tlInc_flag			: std_logic;
@@ -69,7 +68,7 @@ begin
 		if(FIFO_rst = '1') then
 				almost_full_flag <= '0';
 				need_tlInc_flag <= '0';
-				tlCnt <= 0;
+				tlCnt <= "000";
 		
 
 		-- if there is an empty condition then reset the flags
@@ -95,11 +94,11 @@ begin
 				
 				-- if we need to make an emergency inc of the tail counter before writing
 				if(need_tlInc_flag = '1' and (tlCnt + 1 /= hdCnt)) then
-					tlCnt <= tlCnt + 1;
+					tlCnt <= tlCnt + "001";
 					need_tlInc_flag <= '0';
 					
 					-- See if we are still near full condition 
-					if(tlCnt + 1 = hdCnt) then
+					if(tlCnt + "001" = hdCnt) then
 						almost_full_flag <= '1';
 					else
 						almost_full_flag <= '0';
@@ -107,15 +106,15 @@ begin
 				end if;
 			
 				-- write the flit to the buffer
-				fifoReg(tlCnt) <= FIFO_din;
+				fifoReg(conv_integer(tlCnt)) <= FIFO_din;
 				
 				if(almost_full_flag = '0') then -- check if we are on the verge of filling up the buffer
-					tlCnt <= tlCnt + 1;
-					if(tlCnt + 1 = hdCnt) then
+					tlCnt <= tlCnt + "001";
+					if(tlCnt + "001" = hdCnt) then
 						almost_full_flag <= '1';
 					end if;
 				else 
-					if(tlCnt + 1 = hdCnt) then -- last free space filled
+					if(tlCnt + "001" = hdCnt) then -- last free space filled
 						need_tlInc_flag <= '1';
 						almost_full_flag <= '0';
 					end if;					
@@ -130,7 +129,7 @@ begin
 	begin	
 		
 		if(FIFO_rst = '1') then
-				hdCnt <= 0;
+				hdCnt <= "000";
 		
 	
 		elsif (rising_edge(FIFO_deq) and FIFO_rst = '0') then
@@ -142,7 +141,7 @@ begin
 			-- tell the flag processes that a read has occured
 
 			if(empty_flag = '0') then
-					hdCnt <= hdCnt + 1;
+					hdCnt <= hdCnt + "001";
 			end if;
 		end if;
 	end process;
@@ -160,11 +159,11 @@ begin
 	-- Clock insensitive processing (output stuff)
 	
 	-- output front of fifo buffer - first flit in queue is always put on the output	
-	FIFO_qout <= fifoReg(hdCnt);
+	FIFO_qout <= fifoReg(conv_integer(hdCnt));
 
 	-- check and update the full and empty flags anytime something changes
 	-- The buffer will still report full until the need_tlInc flag is cleared
-	full_flag <= '1' when (((tlCnt + 1) = hdCnt) and almost_full_flag = '0') else '0';
+	full_flag <= '1' when (((tlCnt + "001") = hdCnt) and almost_full_flag = '0') else '0';
 	empty_flag <= '1' when (tlCnt = hdCnt) else '0';
 	FIFO_aStatus <= full_flag & empty_flag;
 
