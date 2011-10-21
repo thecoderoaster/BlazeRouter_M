@@ -192,6 +192,7 @@ architecture rtl of BlazeRouter is
 				n_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				n_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				n_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+				n_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 				n_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 				n_vcEnq 			: out  	STD_LOGIC;									-- enqueue command from RNA (to VC)
 				
@@ -202,6 +203,7 @@ architecture rtl of BlazeRouter is
 				e_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				e_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				e_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+				e_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 				e_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 				e_vcEnq 			: out  	STD_LOGIC;									-- enqueue command from RNA (to VC)
 				
@@ -212,6 +214,7 @@ architecture rtl of BlazeRouter is
 				s_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				s_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				s_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+				s_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 				s_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 				s_vcEnq 			: out  	STD_LOGIC;									-- enqueue command from RNA (to VC)
 				
@@ -222,6 +225,7 @@ architecture rtl of BlazeRouter is
 				w_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				w_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				w_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+				w_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 				w_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 				w_vcEnq 			: out  	STD_LOGIC);									-- enqueue command from RNA (to VC)
 	end component;
@@ -318,6 +322,10 @@ architecture rtl of BlazeRouter is
 	signal fcRnaEastCStrb	: std_logic;
 	signal fcRnaSouthCStrb	: std_logic;
 	signal fcRnaWestCStrb	: std_logic;	
+	signal fcRnaNorthDStrb  : std_logic;	-- Data strobe indicator from FC to RNA
+	signal fcRnaEastDStrb   : std_logic;
+	signal fcRnaSouthDStrb  : std_logic;
+	signal fcRnaWestDStrb   : std_logic;
 	
 	-- signals between switch and VC (routed)
 	signal vcSwNorth 		: std_logic_vector(WIDTH downto 0); -- Data output from VC to Switch
@@ -425,6 +433,7 @@ begin
 									fcVcNorth,			-- Data port (to VC) 
 									fcRnaNorthCtPkt,	-- Data port (to RNA) 
 									fcRnaNorthCStrb,	-- Control packet strobe (to RNA) 
+									fcRnaNorthDStrb,
 									north_CTR_out,		-- Clear to Recieve (to neighbor) ***
 									fcVcNorthEnq,		-- enqueue command from RNA (to VC)
 				
@@ -435,6 +444,7 @@ begin
 									fcVcEast,			-- Data port (to VC)
 									fcRnaEastCtPkt,	-- Data port (to RNA)
 									fcRnaEastCStrb,	-- Control packet strobe (to RNA)
+									fcRnaEastDStrb,
 									east_CTR_out,		-- Clear to Recieve (to neighbor) ***
 									fcVcEastEnq,		-- enqueue command from RNA (to VC)
 				
@@ -445,6 +455,7 @@ begin
 									fcVcSouth,			-- Data port (to VC)
 									fcRnaSouthCtPkt,	-- Data port (to RNA)
 									fcRnaSouthCStrb,	-- Control packet strobe (to RNA)
+									fcRnaSouthDStrb,
 									south_CTR_out,		-- Clear to Recieve (to neighbor) ***
 									fcVcSouthEnq,		-- enqueue command from RNA (to VC)
 				
@@ -455,6 +466,7 @@ begin
 									fcVcWest,			-- Data port (to VC)
 									fcRnaWestCtPkt,	-- Data port (to RNA)
 									fcRnaWestCStrb,	-- Control packet strobe (to RNA)
+									fcRnaWestDStrb,
 									west_CTR_out,		-- Clear to Recieve (to neighbor) ***
 									fcVcWestEnq);		-- enqueue command from RNA (to VC)
 	

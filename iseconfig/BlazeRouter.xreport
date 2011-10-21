@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="1.7" >
  <header>
-  <DateModified>2011-10-21T15:34:37</DateModified>
+  <DateModified>2011-10-21T15:54:25</DateModified>
   <ModuleName>BlazeRouter</ModuleName>
   <SummaryTimeStamp>2011-10-09T13:50:45</SummaryTimeStamp>
   <DateInitialized>2010-12-22T14:01:50</DateInitialized>
-  <ImplementationReportsDirectory>C:/Users/kor/Documents/BlazeRouter_M\</ImplementationReportsDirectory>
-  <SavedFilePath>C:/Users/kor/Documents/BlazeRouter_M/iseconfig/BlazeRouter.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>C:/Documents and Settings/asmdev/Desktop/blazerouter-m/BlazeRouter_M\</ImplementationReportsDirectory>
+  <SavedFilePath>C:/Documents and Settings/asmdev/Desktop/blazerouter-m/BlazeRouter_M/iseconfig/BlazeRouter.xreport</SavedFilePath>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
  <body>

@@ -44,6 +44,7 @@ entity fcu is
 			n_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			n_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			n_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+			n_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 			n_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 			n_vcEnq 			: out  	STD_LOGIC;									-- enqueue command from RNA (to VC)
 			
@@ -54,6 +55,7 @@ entity fcu is
 			e_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			e_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			e_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+			e_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 			e_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 			e_vcEnq 			: out  	STD_LOGIC;									-- enqueue command from RNA (to VC)
 			
@@ -64,6 +66,7 @@ entity fcu is
 			s_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			s_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			s_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+			s_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 			s_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 			s_vcEnq 			: out  	STD_LOGIC;									-- enqueue command from RNA (to VC)
 			
@@ -74,6 +77,7 @@ entity fcu is
 			w_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			w_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			w_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+			w_rnaDataStrb	: out 	STD_LOGIC;									-- Data packet strobe (to RNA)
 			w_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 			w_vcEnq 			: out  	STD_LOGIC);									-- enqueue command from RNA (to VC)
 end fcu;
@@ -89,6 +93,7 @@ architecture fcu_4 of fcu is
 				  fc_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				  fc_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				  fc_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+				  fc_rnaDataStrb	: out		STD_LOGIC;									-- Data packet strobe (to RNA)
 				  fc_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
 				  fc_vcEnq 			: out  	STD_LOGIC);									-- enqueue command from RNA (to VC)
 	end component;
@@ -102,6 +107,7 @@ begin
 												n_vcData,
 												n_rnaCtrl,
 												n_rnaCtrlStrb,
+												n_rnaDataStrb,
 												n_CTR,		
 												n_vcEnq);
 
@@ -112,6 +118,7 @@ begin
 												e_vcData,
 												e_rnaCtrl,
 												e_rnaCtrlStrb,
+												e_rnaDataStrb,
 												e_CTR,		
 												e_vcEnq);
 
@@ -122,6 +129,7 @@ begin
 												s_vcData,
 												s_rnaCtrl,
 												s_rnaCtrlStrb,
+												s_rnaDataStrb,
 												s_CTR,		
 												s_vcEnq);
 
@@ -132,6 +140,7 @@ begin
 												w_vcData,
 												w_rnaCtrl,
 												w_rnaCtrlStrb,
+												w_rnaDataStrb,
 												w_CTR,		
 												w_vcEnq);
 												

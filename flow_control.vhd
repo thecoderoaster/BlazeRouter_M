@@ -42,6 +42,7 @@ entity flow_control is
 			  fc_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
            fc_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
            fc_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
+			  fc_rnaDataStrb	: out		STD_LOGIC;									-- Data packet strobe (to RNA)
 			  fc_CTR				: out		STD_LOGIC;									-- Clear to Recieve (to neighbor)
            fc_vcEnq 			: out  	STD_LOGIC);									-- enqueue command from RNA (to VC)
 end flow_control;
@@ -50,6 +51,7 @@ architecture fc_4 of flow_control is
 
 	signal dStrbInd	: STD_LOGIC;
 	signal CTRInd	: STD_LOGIC;
+	signal DATInd 	: STD_LOGIC;
 
 	-- Control packet sense (for now it is assumed if LSB is high in a packet then it is of the control variety)
 	-- Its assumed that the control packet will get consumed and a new one will be created
@@ -66,6 +68,10 @@ fc_rnaCtrl <= fc_dataIn;
 -- Dmux for control packet sense
 fc_rnaCtrlStrb <= fc_dStrb when (senseOp = '1') else '0';
 dStrbInd <= fc_dStrb when (senseOp = '0') else '0';
+
+-- Data indicator for RNA 
+-- When a non control packet is wanting to enter and ctr is low we indicate it exists
+fc_rnaDataStrb <= '1' when (senseOp = '0' and (CTRInd = '0' and fc_dStrb = '1')) else '0';
 
 -- Clear to recieve handler
 CTRInd <= (not fc_vcFull) and fc_CTRflg;
