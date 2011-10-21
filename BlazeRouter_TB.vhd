@@ -292,6 +292,20 @@ BEGIN
 		north_din_good <= '0';
 		
 		--Inject a data packet
+		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
+		north_data_in <= "0000000000000000" & "0001" & "0001" & "011" & "0101" & "00" & "0";
+		--north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		
+		--Inject a data packet (JUNK PACKET)
+		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
+		north_data_in <= "0000000000000000" & "0001" & "0010" & "001" & "0001" & "00" & "0";
+		--north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		
+		
       wait;
    end process;
 

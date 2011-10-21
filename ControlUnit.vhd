@@ -142,6 +142,7 @@ architecture Behavioral of ControlUnit is
 	signal e_DpFlg				: std_logic;
 	signal s_DpFlg				: std_logic;
 	signal w_DpFlg				: std_logic;
+	signal n_DpProcessed		: std_logic;
 	
 begin
 
@@ -231,6 +232,8 @@ begin
 					rte_en <= '0';
 					sch_en <= '0';
 					adr_en <= '0';
+					
+					n_DpProcessed <= '0';
 					
 					sw_rnaCtDeq <= '0';
 					
@@ -671,6 +674,7 @@ begin
 					
 					--Acknowledge
 					n_CTRflg <= '1', '0' after 1 ns;
+					n_DpProcessed <= '1', '0' after 1 ns;
 					next_state <= dp_arrivedOnEast1;
 	--*EAST ARRIVALS*--
 				when dp_arrivedOnEast1 =>
@@ -753,7 +757,8 @@ begin
 	end process;
 	
 	--North Data Packet In 
-	process(clk, rst, n_rnaCtrl)
+	process(clk, rst, n_rnaCtrl, n_DpProcessed)
+	--process(rst, n_rnaCtrl, n_DpProcessed)
 		variable tmp_storage : std_logic_vector(7 downto 0);
 		begin
 			if(rst = '1') then
@@ -765,11 +770,17 @@ begin
 					n_DpFlg <= '1';
 				else
 					n_DpFlg <= '0';
-				end if;
+				end if;	
 			else
 				n_DpFlg <= '0';
 			end if;
 			
+			
+			if(n_DpProcessed = '1') then
+				tmp_storage := n_rnaCtrl(17 downto 10);
+			else
+				tmp_storage := "00000000";
+			end if;
 	end process;
 	
 	--East Data Packet In
