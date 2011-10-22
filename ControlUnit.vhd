@@ -84,15 +84,19 @@ entity ControlUnit is
 			w_vc_status 		: in 	std_logic_vector (1 downto 0);
 			n_CTRflg				: out std_logic;
 			n_CtrlFlg			: in 	std_logic;
+			n_DataFlg			: in  std_logic;
 			n_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			e_CTRflg				: out std_logic;
 			e_CtrlFlg			: in 	std_logic;
+			e_DataFlg			: in  std_logic;
 			e_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			s_CTRflg				: out std_logic;
 			s_CtrlFlg			: in 	std_logic;
+			s_DataFlg			: in  std_logic;
 			s_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			w_CTRflg				: out std_logic;
 			w_CtrlFlg			: in 	std_logic;
+			w_DataFlg			: in  std_logic;
 			w_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			sw_nSel				: out std_logic_vector(2 downto 0);
 			sw_eSel				: out std_logic_vector(2 downto 0);
@@ -142,7 +146,6 @@ architecture Behavioral of ControlUnit is
 	signal e_DpFlg				: std_logic;
 	signal s_DpFlg				: std_logic;
 	signal w_DpFlg				: std_logic;
-	signal n_DpProcessed		: std_logic;
 	
 begin
 
@@ -232,9 +235,7 @@ begin
 					rte_en <= '0';
 					sch_en <= '0';
 					adr_en <= '0';
-					
-					n_DpProcessed <= '0';
-					
+							
 					sw_rnaCtDeq <= '0';
 					
 					next_state <= north1;
@@ -653,7 +654,7 @@ begin
 	--*NORTH ARRIVALS*--
 				when dp_arrivedOnNorth1 =>
 					--Any new data packets?
-					if(n_DpFlg = '1') then
+					if(n_DataFlg = '1') then
 						next_state <= dp_arrivedOnNorth2;
 					else
 						next_state <= dp_arrivedOnEast1;
@@ -674,12 +675,11 @@ begin
 					
 					--Acknowledge
 					n_CTRflg <= '1', '0' after 1 ns;
-					n_DpProcessed <= '1', '0' after 1 ns;
 					next_state <= dp_arrivedOnEast1;
 	--*EAST ARRIVALS*--
 				when dp_arrivedOnEast1 =>
 					--Any new data packets?
-					if(e_DpFlg = '1') then
+					if(e_DataFlg = '1') then
 						next_state <= dp_arrivedOnEast2;
 					else
 						next_state <= dp_arrivedOnSouth1;
@@ -704,7 +704,7 @@ begin
 	--*SOUTH ARRIVALS*--
 				when dp_arrivedOnSouth1 =>
 					--Any new data packets?
-					if(s_DpFlg = '1') then
+					if(s_DataFlg = '1') then
 						next_state <= dp_arrivedOnSouth2;
 					else
 						next_state <= dp_arrivedOnWest1;
@@ -729,7 +729,7 @@ begin
 	--*WEST ARRIVALS*--
 				when dp_arrivedOnWest1 =>
 					--Any new data packets?
-					if(w_DpFlg = '1') then
+					if(w_DataFlg = '1') then
 						next_state <= dp_arrivedOnWest2;
 					else
 						next_state <= north1;
@@ -756,91 +756,5 @@ begin
 			end case;
 	end process;
 	
-	--North Data Packet In 
-	process(clk, rst, n_rnaCtrl, n_DpProcessed)
-	--process(rst, n_rnaCtrl, n_DpProcessed)
-		variable tmp_storage : std_logic_vector(7 downto 0);
-		begin
-			if(rst = '1') then
-				tmp_storage := std_logic_vector(to_unsigned(0, tmp_storage'length));
-			end if;
-			
-			if clk = '1' then
-				if(n_rnaCtrl(17 downto 10) /= tmp_storage) and (n_rnaCtrl(0) = '0') then
-					n_DpFlg <= '1';
-				else
-					n_DpFlg <= '0';
-				end if;	
-			else
-				n_DpFlg <= '0';
-			end if;
-			
-			
-			if(n_DpProcessed = '1') then
-				tmp_storage := n_rnaCtrl(17 downto 10);
-			else
-				tmp_storage := "00000000";
-			end if;
-	end process;
-	
-	--East Data Packet In
-	process(clk, rst, e_rnaCtrl)
-		variable tmp_storage : std_logic_vector(7 downto 0);
-		begin
-			if(rst = '1') then
-				tmp_storage := std_logic_vector(to_unsigned(0, tmp_storage'length));
-			end if;
-			
-			if clk = '1' then
-				if(e_rnaCtrl(17 downto 10) /= tmp_storage) and (e_rnaCtrl(0) = '0') then
-					e_DpFlg <= '1';
-				else
-					e_DpFlg <= '0';
-				end if;
-			else
-				e_DpFlg <= '0';
-			end if;
-			
-	end process;
-	
-	--South Data Packet In
-	process(clk, rst, s_rnaCtrl)
-		variable tmp_storage : std_logic_vector(7 downto 0);
-		begin
-			if(rst = '1') then
-				tmp_storage := std_logic_vector(to_unsigned(0, tmp_storage'length));
-			end if;
-			
-			if clk = '1' then
-				if(s_rnaCtrl(17 downto 10) /= tmp_storage) and (s_rnaCtrl(0) = '0') then
-					s_DpFlg <= '1';
-				else
-					s_DpFlg <= '0';
-				end if;
-			else
-				s_DpFlg <= '0';
-			end if;
-			
-	end process;
-	
-	--West Data Packet In
-	process(clk, rst, w_rnaCtrl)
-		variable tmp_storage : std_logic_vector(7 downto 0);
-		begin
-			if(rst = '1') then
-				tmp_storage := std_logic_vector(to_unsigned(0, tmp_storage'length));
-			end if;
-			
-			if clk = '1' then
-				if(w_rnaCtrl(17 downto 10) /= tmp_storage) and (w_rnaCtrl(0) = '0') then
-					w_DpFlg <= '1';
-				else
-					w_DpFlg <= '0';
-				end if;
-			else
-				w_DpFlg <= '0';
-			end if;
-			
-	end process;
 end Behavioral;
 

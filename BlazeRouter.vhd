@@ -162,9 +162,14 @@ architecture rtl of BlazeRouter is
 				e_CtrlFlg			: in std_logic;										--(data good from neighbor via fcu)
 				s_CtrlFlg			: in std_logic;
 				w_CtrlFlg			: in std_logic;
+				
+				n_DataFlg			: in std_logic;										--Receive a data packet flag from neighbor
+				e_DataFlg			: in std_logic;										--(data good from neighbor via fcu)
+				s_DataFlg			: in std_logic;
+				w_DataFlg			: in std_logic;
 			
 				--Scheduler Related
-				n_rnaCtrl			: in std_logic_vector(WIDTH downto 0);			-- Control Packet 
+				n_rnaCtrl			: in std_logic_vector(WIDTH downto 0);			-- Control/Data Packet 
 				e_rnaCtrl			: in std_logic_vector(WIDTH downto 0);
 				s_rnaCtrl			: in std_logic_vector(WIDTH downto 0);
 				w_rnaCtrl			: in std_logic_vector(WIDTH downto 0);
@@ -405,6 +410,10 @@ begin
 									fcRnaEastCStrb, --(data good from neighbor via fcu)
 									fcRnaSouthCStrb,
 									fcRnaWestCStrb,
+									fcRnaNorthDStrb,
+									fcRnaEastDStrb,
+									fcRnaSouthDStrb,
+									fcRnaWestDStrb,
 
 									--Scheduler Related
 									fcRnaNorthCtPkt, -- Control Packet 

@@ -88,6 +88,11 @@ entity Arbiter is
 				s_CtrlFlg				: in std_logic;						--After CTR goes up, and once this goes
 				w_CtrlFlg				: in std_logic;						--down, we dequeue our stuff.
 			
+				n_DataFlg			: in std_logic;							--Receive a data packet flag from neighbor
+				e_DataFlg			: in std_logic;							--(data good from neighbor via fcu)
+				s_DataFlg			: in std_logic;
+				w_DataFlg			: in std_logic;
+			
 				--Scheduler Related
 				n_rnaCtrl			: in std_logic_vector(WIDTH downto 0);			-- Control Packet 
 				e_rnaCtrl			: in std_logic_vector(WIDTH downto 0);
@@ -205,15 +210,19 @@ architecture rtl of Arbiter is
 			w_vc_status 		: in std_logic_vector (1 downto 0);
 			n_CTRflg				: out std_logic;
 			n_CtrlFlg			: in std_logic;
+			n_DataFlg			: in std_logic;
 			n_rnaCtrl			: in std_logic_vector(cp_size-1 downto 0);
 			e_CTRflg				: out std_logic;
 			e_CtrlFlg			: in std_logic;
+			e_DataFlg			: in std_logic;
 			e_rnaCtrl			: in std_logic_vector(cp_size-1 downto 0);
 			s_CTRflg				: out std_logic;
 			s_CtrlFlg			: in std_logic;
+			s_DataFlg			: in std_logic;
 			s_rnaCtrl			: in std_logic_vector(cp_size-1 downto 0);
 			w_CTRflg				: out std_logic;
 			w_CtrlFlg			: in std_logic;
+			w_DataFlg			: in std_logic;
 			w_rnaCtrl			: in std_logic_vector(cp_size-1 downto 0);
 			sw_nSel				: out std_logic_vector(2 downto 0);
 			sw_eSel				: out std_logic_vector(2 downto 0);
@@ -273,8 +282,11 @@ begin
 					e_vc_deq, e_vc_rnaSelI, e_vc_rnaSelO, e_vc_rnaSelS, e_vc_strq, e_vc_status,
 					s_vc_deq, s_vc_rnaSelI, s_vc_rnaSelO, s_vc_rnaSelS, s_vc_strq, s_vc_status,
 					w_vc_deq, w_vc_rnaSelI, w_vc_rnaSelO, w_vc_rnaSelS, w_vc_strq, w_vc_status,
-					n_CTRFlg, n_CtrlFlg, n_rnaCtrl, e_CTRFlg, e_CtrlFlg, e_rnaCtrl, s_CTRFlg, s_CtrlFlg, s_rnaCtrl,
-					w_CTRFlg, w_CtrlFlg, w_rnaCtrl, sw_nSel, sw_eSel, sw_sSel, sw_wSel, sw_ejectSel, sw_rnaCtFl, 
+					n_CTRFlg, n_CtrlFlg, n_DataFlg, n_rnaCtrl, 
+					e_CTRFlg, e_CtrlFlg, e_DataFlg, e_rnaCtrl, 
+					s_CTRFlg, s_CtrlFlg, s_DataFlg, s_rnaCtrl,
+					w_CTRFlg, w_CtrlFlg, w_DataFlg, w_rnaCtrl, 
+					sw_nSel, sw_eSel, sw_sSel, sw_wSel, sw_ejectSel, sw_rnaCtFl, 
 					sw_rnaCtDeq, rna_ctrlPkt, injt_ctrlPkt);
 	
 	
