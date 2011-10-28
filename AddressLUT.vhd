@@ -32,6 +32,8 @@ entity AddressLUT is
 			  addr 		: in std_logic_vector(address_size-1 downto 0);
            en 			: in  std_logic;
 			  search		: in std_logic;
+			  nf			: out std_logic;
+			  nf_ack		: in std_logic;
 			  result		: out std_logic_vector(address_size-1 downto 0);
            q 			: out std_logic_vector(word_size-1 downto 0));
 end AddressLUT;
@@ -58,15 +60,27 @@ begin
 		end if;
 	end process;
 	
-	process(search)
+	process(search, nf_ack)
 		variable found : std_logic_vector(address_size-1 downto 0);
 		begin
 			if search = '1' then
 				found := std_logic_vector(to_unsigned(0, found'length));
+				nf <= '0';
+				
 				for i in id_table'range loop
 					exit when id_table(i) = d;
 					found := found + "0001";
+					--Overflow condition means: We didn't find it. Sorry, stray packet? :(
+					if(found = "0000") then
+						nf <= '1';
+					else
+						nf <= '0';
+					end if;
 				end loop;
+			end if;
+			
+			if nf_ack = '1' then
+				nf <= '0';
 			end if;
 			
 			result <= found;

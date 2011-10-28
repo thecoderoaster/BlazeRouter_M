@@ -57,6 +57,8 @@ entity ControlUnit is
 			sch_en 				: out std_logic;
 			adr_en				: out std_logic;
 			adr_search			: out std_logic;
+			adr_nf				: in  std_logic;
+			adr_nf_ack			: out std_logic;
 			adr_result			: in 	std_logic_vector (address_size-1 downto 0);
 			n_vc_deq 			: out std_logic;
 			n_vc_rnaSelI 		: out std_logic_vector (1 downto 0);		 
@@ -119,7 +121,7 @@ architecture Behavioral of ControlUnit is
 							  injection6, injection7, injection8, injection9, injection10,
 							  timer_check1, timer_check2, timer_check3, timer_check4,
 							  timer_check5, departure1,
-							  dp_arrivedOnNorth1, dp_arrivedOnNorth2, dp_arrivedOnNorth3, dp_arrivedOnNorth4,
+							  dp_arrivedOnNorth1, dp_arrivedOnNorth2, dp_arrivedOnNorth3, dp_arrivedOnNorth4, dp_arrivedOnNorth5, dp_arrivedOnNorth6,
 							  dp_arrivedOnEast1, dp_arrivedOnEast2, dp_arrivedOnEast3, dp_arrivedOnEast4,
 							  dp_arrivedOnSouth1, dp_arrivedOnSouth2, dp_arrivedOnSouth3, dp_arrivedOnSouth4,
 							  dp_arrivedOnWest1, dp_arrivedOnWest2, dp_arrivedOnWest3, dp_arrivedOnWest4);   --61 State FSM
@@ -235,6 +237,9 @@ begin
 					rte_en <= '0';
 					sch_en <= '0';
 					adr_en <= '0';
+					
+					adr_search <= '0';
+					adr_nf_ack <= '0';
 							
 					sw_rnaCtDeq <= '0';
 					
@@ -664,12 +669,24 @@ begin
 					adr_search <= '1';
 					adr_data_out <= n_rnaCtrl(17 downto 10);
 					next_state <= dp_arrivedOnNorth3;
-				when dp_arrivedOnNorth3 =>		
+				when dp_arrivedOnNorth3 =>	
+					if(adr_nf = '1') then
+						next_state <= dp_arrivedOnNorth4;
+					else
+						next_state <= dp_arrivedOnNorth5;
+					end if;
+				when dp_arrivedOnNorth4 =>
+					--Acknowledge back (discarding packet)
+					adr_search <= '0';
+					adr_nf_ack <= '1', '0' after 1 ns;
+					n_CTRflg <= '1', '0' after 1 ns;
+					next_state <= dp_arrivedOnEast1;
+				when dp_arrivedOnNorth5 =>
 					address <= adr_result;			--should be the address found above
 					adr_search <= '0';
 					rsv_en <= '0';
-					next_state <= dp_arrivedOnNorth4;
-				when dp_arrivedOnNorth4 =>
+					next_state <= dp_arrivedOnNorth6;
+				when dp_arrivedOnNorth6 =>
 					--Control VCC
 					n_vc_rnaSelI <= rsv_data_in(1 downto 0);			--Value from RSV TABLE (PATH)
 					

@@ -285,28 +285,67 @@ BEGIN
 		--***STEP 3: Inject a control packet***
 		
 		--PAYLOAD = 1200 Cycles (TID) : GID = 0x01 (SOURCE)	: PID = 0x01 (PKT ID) :	DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x01
-		north_data_in <= "0000010010110000" & "0001" & "0001" & "011" & "0101" & "00" & "1";
+		north_data_in <= "0000010010110000" & "0001" & "0001" & "001" & "0101" & "00" & "1";
 		north_din_good <= '1';
 		
 		wait until north_CTR_out = '1';
 		north_din_good <= '0';
 		
-		--Inject a data packet
+		--Inject a data packet (LEGIT PACKET #1)
 		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
-		north_data_in <= "0000000000000000" & "0001" & "0001" & "011" & "0101" & "00" & "0";
+		north_data_in <= "0000000000000000" & "0001" & "0001" & "001" & "0101" & "00" & "0";
 		north_din_good <= '1';
 		
 		wait until north_CTR_out = '1';
 		north_din_good <= '0';
 		
-		--Inject a data packet (JUNK PACKET)
+		--Inject a data packet (JUNK PACKET #1)
 		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
-		north_data_in <= "0000000000000000" & "0001" & "0010" & "001" & "0001" & "00" & "0";
+		north_data_in <= "0000000000000000" & "0001" & "0010" & "001" & "0101" & "00" & "0";
 		north_din_good <= '1';
 		
 		wait until north_CTR_out = '1';
 		north_din_good <= '0';
 		
+		--Inject a data packet (JUNK PACKET #2)
+		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
+		north_data_in <= "0000000000010000" & "0001" & "0011" & "001" & "0101" & "00" & "0";
+		north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		north_din_good <= '0';
+		
+		--Inject a control packet***
+		--PAYLOAD = 1201 Cycles (TID) : GID = 0x01 (SOURCE)	: PID = 0x01 (PKT ID) :	DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x01
+		north_data_in <= "0000010010110001" & "0001" & "0010" & "011" & "0101" & "00" & "1";
+		north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		north_din_good <= '0';
+		
+		--Inject a data packet (JUNK PACKET #3)
+		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
+		north_data_in <= "0000000000000001" & "0001" & "0110" & "001" & "0101" & "00" & "0";
+		north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		north_din_good <= '0';
+		
+		--Inject a data packet (LEGIT PACKET #2)
+		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
+		north_data_in <= "0000000000000000" & "0001" & "0010" & "011" & "0101" & "00" & "0";
+		north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		north_din_good <= '0';
+		
+		--Inject a data packet (JUNK PACKET #4)
+		--PAYLOAD = DON'T CARE (ANYTHING) : GID = 0x01 (SOURCE) : PID = 0x01 (PKT ID) : DIR = 0x011 (WEST) : ADDR = 0x05 (ROUTER ADDRESS) : COND = 0x00
+		north_data_in <= "0000000000010000" & "0010" & "1010" & "001" & "0101" & "00" & "0";
+		north_din_good <= '1';
+		
+		wait until north_CTR_out = '1';
+		north_din_good <= '0';
 		
       wait;
    end process;
