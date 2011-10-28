@@ -82,6 +82,7 @@ fc_CTR <= CTRInd;
 -- arbiter will have direct control to enqueue actions, but the data must be good and 
 -- the system must be clear to recv
 fc_vcEnq <= CTRInd and dStrbInd and fc_arbEnq;
+--fc_vcEnq <= fc_arbEnq;
 
 end fc_4;
 

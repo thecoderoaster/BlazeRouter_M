@@ -87,18 +87,22 @@ entity ControlUnit is
 			n_CTRflg				: out std_logic;
 			n_CtrlFlg			: in 	std_logic;
 			n_DataFlg			: in  std_logic;
+			n_arbEnq				: out std_logic;
 			n_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			e_CTRflg				: out std_logic;
 			e_CtrlFlg			: in 	std_logic;
 			e_DataFlg			: in  std_logic;
+			e_arbEnq				: out std_logic;
 			e_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			s_CTRflg				: out std_logic;
 			s_CtrlFlg			: in 	std_logic;
 			s_DataFlg			: in  std_logic;
+			s_arbEnq				: out std_logic;
 			s_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			w_CTRflg				: out std_logic;
 			w_CtrlFlg			: in 	std_logic;
 			w_DataFlg			: in  std_logic;
+			w_arbEnq				: out std_logic;
 			w_rnaCtrl			: in 	std_logic_vector(cp_size-1 downto 0);
 			sw_nSel				: out std_logic_vector(2 downto 0);
 			sw_eSel				: out std_logic_vector(2 downto 0);
@@ -120,7 +124,7 @@ architecture Behavioral of ControlUnit is
 							  injection1, injection2, injection3, injection4, injection5,
 							  injection6, injection7, injection8, injection9, injection10,
 							  timer_check1, timer_check2, timer_check3, timer_check4,
-							  timer_check5, departure1,
+							  departure1,
 							  dp_arrivedOnNorth1, dp_arrivedOnNorth2, dp_arrivedOnNorth3, dp_arrivedOnNorth4, dp_arrivedOnNorth5, dp_arrivedOnNorth6,
 							  dp_arrivedOnEast1, dp_arrivedOnEast2, dp_arrivedOnEast3, dp_arrivedOnEast4,
 							  dp_arrivedOnSouth1, dp_arrivedOnSouth2, dp_arrivedOnSouth3, dp_arrivedOnSouth4,
@@ -583,7 +587,7 @@ begin
 					if(r_address /= w_address and start_timer = '0') then
 						next_state <= timer_check2;
 					else
-						next_state <= timer_check5;
+						next_state <= timer_check4;
 					end if;
 					
 					rte_en <= '0';
@@ -601,16 +605,11 @@ begin
 					--Grab resource reservation information that's vital for departure
 					next_pkt_in_vcc <= rsv_data_in(5 downto 3);				--Which controller?
 					next_pkt_in_vcell <= rsv_data_in(2 downto 0);			--Which cell within controller?
+					next_pkt_departing_from_gate <= rsv_data_in(2 downto 0); --Which direction for switch? (same)
 					
-					--Grab routing information.
-					address <= adr_data_in(7 downto 4); 	-- Only doing a max of 16 nodes in network for now
-					rte_en <= '0';
-					next_state <= timer_check4;
-				when timer_check4 =>
-					next_pkt_departing_from_gate <= rte_data_in(2 downto 0);
 					start_timer <= '1';
 					next_state <= dp_arrivedOnNorth1;
-				when timer_check5 =>
+				when timer_check4 =>
 					if(time_expired = '1') then
 						start_timer <= '0';
 						next_state <= departure1;
@@ -692,6 +691,7 @@ begin
 					
 					--Acknowledge
 					n_CTRflg <= '1', '0' after 1 ns;
+					n_arbEnq <= '1', '0' after 1 ns;
 					next_state <= dp_arrivedOnEast1;
 	--*EAST ARRIVALS*--
 				when dp_arrivedOnEast1 =>
