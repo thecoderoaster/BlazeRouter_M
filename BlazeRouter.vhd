@@ -194,6 +194,7 @@ architecture rtl of BlazeRouter is
 				n_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 				n_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 				n_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+				n_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 				n_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				n_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				n_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -205,6 +206,7 @@ architecture rtl of BlazeRouter is
 				e_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 				e_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 				e_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+				e_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 				e_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				e_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				e_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -216,6 +218,7 @@ architecture rtl of BlazeRouter is
 				s_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 				s_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 				s_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+				s_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 				s_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				s_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				s_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -227,6 +230,7 @@ architecture rtl of BlazeRouter is
 				w_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 				w_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 				w_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+				w_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 				w_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				w_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				w_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -331,6 +335,10 @@ architecture rtl of BlazeRouter is
 	signal fcRnaEastDStrb   : std_logic;
 	signal fcRnaSouthDStrb  : std_logic;
 	signal fcRnaWestDStrb   : std_logic;
+	signal fcRnaNorthEnq		: std_logic;
+	signal fcRnaEastEnq		: std_logic;
+	signal fcRnaSouthEnq		: std_logic;
+	signal fcRnaWestEnq		: std_logic;
 	
 	-- signals between switch and VC (routed)
 	signal vcSwNorth 		: std_logic_vector(WIDTH downto 0); -- Data output from VC to Switch
@@ -439,6 +447,7 @@ begin
 									north_data_in, 	-- Input data port (from neighbor) ***
 									north_din_good,	-- Data strobe (from neighbor) ***
 									vcFcNorthFull,		-- Full status flag (from VC) 
+									fcRnaNorthEnq,
 									fcVcNorth,			-- Data port (to VC) 
 									fcRnaNorthCtPkt,	-- Data port (to RNA) 
 									fcRnaNorthCStrb,	-- Control packet strobe (to RNA) 
@@ -450,6 +459,7 @@ begin
 									east_data_in, 		-- Input data port (from neighbor) ***
 									east_din_good,		-- Data strobe (from neighbor) ***
 									vcFcEastFull,		-- Full status flag (from VC)
+									fcRnaEastEnq,
 									fcVcEast,			-- Data port (to VC)
 									fcRnaEastCtPkt,	-- Data port (to RNA)
 									fcRnaEastCStrb,	-- Control packet strobe (to RNA)
@@ -461,6 +471,7 @@ begin
 									south_data_in, 	-- Input data port (from neighbor) ***
 									south_din_good,	-- Data strobe (from neighbor) ***
 									vcFcSouthFull,		-- Full status flag (from VC)
+									fcRnaSouthEnq,
 									fcVcSouth,			-- Data port (to VC)
 									fcRnaSouthCtPkt,	-- Data port (to RNA)
 									fcRnaSouthCStrb,	-- Control packet strobe (to RNA)
@@ -472,6 +483,7 @@ begin
 									west_data_in, 		-- Input data port (from neighbor) ***
 									west_din_good,		-- Data strobe (from neighbor) ***
 									vcFcWestFull,		-- Full status flag (from VC)
+									fcRnaWestEnq,
 									fcVcWest,			-- Data port (to VC)
 									fcRnaWestCtPkt,	-- Data port (to RNA)
 									fcRnaWestCStrb,	-- Control packet strobe (to RNA)

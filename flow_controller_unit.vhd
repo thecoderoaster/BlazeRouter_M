@@ -41,6 +41,7 @@ entity fcu is
 			n_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 			n_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 			n_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+			n_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 			n_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			n_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			n_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -52,6 +53,7 @@ entity fcu is
 			e_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 			e_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 			e_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+			e_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 			e_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			e_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			e_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -63,6 +65,7 @@ entity fcu is
 			s_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 			s_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 			s_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+			s_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 			s_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			s_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			s_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -74,6 +77,7 @@ entity fcu is
 			w_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 			w_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 			w_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+			w_arbEnq			: in 		STD_LOGIC;									-- Direct Enq control (from arbiter)
 			w_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 			w_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 			w_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -90,6 +94,7 @@ architecture fcu_4 of fcu is
 				  fc_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
 				  fc_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
 				  fc_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+				  fc_arbEnq			: in 		STD_LOGIC; 									-- Direct Enq control (from arbiter)
 				  fc_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
 				  fc_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
 				  fc_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -104,6 +109,7 @@ begin
 												n_dataIn,
 												n_dStrb,
 												n_vcFull,
+												n_arbEnq,
 												n_vcData,
 												n_rnaCtrl,
 												n_rnaCtrlStrb,
@@ -115,6 +121,7 @@ begin
 												e_dataIn,
 												e_dStrb,
 												e_vcFull,
+												e_arbEnq,
 												e_vcData,
 												e_rnaCtrl,
 												e_rnaCtrlStrb,
@@ -126,6 +133,7 @@ begin
 												s_dataIn,
 												s_dStrb,
 												s_vcFull,
+												s_arbEnq,
 												s_vcData,
 												s_rnaCtrl,
 												s_rnaCtrlStrb,
@@ -137,6 +145,7 @@ begin
 												w_dataIn,
 												w_dStrb,
 												w_vcFull,
+												w_arbEnq,
 												w_vcData,
 												w_rnaCtrl,
 												w_rnaCtrlStrb,

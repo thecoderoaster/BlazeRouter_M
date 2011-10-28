@@ -39,6 +39,7 @@ entity flow_control is
 			  fc_dataIn 		: in  	STD_LOGIC_VECTOR (WIDTH downto 0); 	-- Input data port (from neighbor)
            fc_dStrb 			: in  	STD_LOGIC;									-- Data strobe (from neighbor)
            fc_vcFull 		: in  	STD_LOGIC;									-- Full status flag (from VC)
+			  fc_arbEnq			: in 		STD_LOGIC; 									-- Direct Enq control (from arbiter)
 			  fc_vcData 		: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to VC)
            fc_rnaCtrl	 	: out  	STD_LOGIC_VECTOR (WIDTH downto 0);	-- Data port (to RNA)
            fc_rnaCtrlStrb 	: out  	STD_LOGIC;									-- Control packet strobe (to RNA)
@@ -78,7 +79,9 @@ CTRInd <= (not fc_vcFull) and fc_CTRflg;
 fc_CTR <= CTRInd;
 
 -- VC Data strobe handler
-fc_vcEnq <= CTRInd and dStrbInd;
+-- arbiter will have direct control to enqueue actions, but the data must be good and 
+-- the system must be clear to recv
+fc_vcEnq <= CTRInd and dStrbInd and fc_arbEnq;
 
 end fc_4;
 
