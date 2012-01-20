@@ -126,9 +126,9 @@ architecture Behavioral of ControlUnit is
 							  timer_check1, timer_check2, timer_check3, timer_check4,
 							  departure1,
 							  dp_arrivedOnNorth1, dp_arrivedOnNorth2, dp_arrivedOnNorth3, dp_arrivedOnNorth4, dp_arrivedOnNorth5, dp_arrivedOnNorth6,
-							  dp_arrivedOnEast1, dp_arrivedOnEast2, dp_arrivedOnEast3, dp_arrivedOnEast4,
-							  dp_arrivedOnSouth1, dp_arrivedOnSouth2, dp_arrivedOnSouth3, dp_arrivedOnSouth4,
-							  dp_arrivedOnWest1, dp_arrivedOnWest2, dp_arrivedOnWest3, dp_arrivedOnWest4);   --61 State FSM
+							  dp_arrivedOnEast1, dp_arrivedOnEast2, dp_arrivedOnEast3, dp_arrivedOnEast4, dp_arrivedOnEast5, dp_arrivedOnEast6,
+							  dp_arrivedOnSouth1, dp_arrivedOnSouth2, dp_arrivedOnSouth3, dp_arrivedOnSouth4, dp_arrivedOnSouth5, dp_arrivedOnSouth6,
+							  dp_arrivedOnWest1, dp_arrivedOnWest2, dp_arrivedOnWest3, dp_arrivedOnWest4, dp_arrivedOnWest5, dp_arrivedOnWest6);   --61 State FSM
 	signal state, next_state : state_type;
 	
 	signal router_address 	: std_logic_vector(PID_WIDTH-1 downto 0);
@@ -706,17 +706,30 @@ begin
 					adr_search <= '1';
 					adr_data_out <= e_rnaCtrl(17 downto 10);
 					next_state <= dp_arrivedOnEast3;
-				when dp_arrivedOnEast3 =>
+				when dp_arrivedOnEast3 =>	
+					if(adr_nf = '1') then
+						next_state <= dp_arrivedOnEast4;
+					else
+						next_state <= dp_arrivedOnEast5;
+					end if;
+				when dp_arrivedOnEast4 =>
+					--Acknowledge back (discarding packet)
+					adr_search <= '0';
+					adr_nf_ack <= '1', '0' after 1 ns;
+					e_CTRflg <= '1', '0' after 1 ns;
+					next_state <= dp_arrivedOnSouth1;
+				when dp_arrivedOnEast5 =>
 					address <= adr_result;			--should be the address found above
 					adr_search <= '0';
 					rsv_en <= '0';
-					next_state <= dp_arrivedOnEast4;
-				when dp_arrivedOnEast4 =>
+					next_state <= dp_arrivedOnEast6;
+				when dp_arrivedOnEast6 =>
 					--Control VCC
-					e_vc_rnaSelI <= rsv_data_in(1 downto 0);
+					e_vc_rnaSelI <= rsv_data_in(1 downto 0);			--Value from RSV TABLE (PATH)
 					
-					--Acknowledge? 
+					--Acknowledge
 					e_CTRflg <= '1', '0' after 1 ns;
+					e_arbEnq <= '1', '0' after 1 ns;
 					next_state <= dp_arrivedOnSouth1;
 	--*SOUTH ARRIVALS*--
 				when dp_arrivedOnSouth1 =>
@@ -732,16 +745,29 @@ begin
 					adr_data_out <= s_rnaCtrl(17 downto 10);
 					next_state <= dp_arrivedOnSouth3;
 				when dp_arrivedOnSouth3 =>	
+					if(adr_nf = '1') then
+						next_state <= dp_arrivedOnSouth4;
+					else
+						next_state <= dp_arrivedOnSouth5;
+					end if;
+				when dp_arrivedOnSouth4 =>
+					--Acknowledge back (discarding packet)
+					adr_search <= '0';
+					adr_nf_ack <= '1', '0' after 1 ns;
+					s_CTRflg <= '1', '0' after 1 ns;
+					next_state <= dp_arrivedOnWest1;
+				when dp_arrivedOnSouth5 =>
 					address <= adr_result;			--should be the address found above
 					adr_search <= '0';
 					rsv_en <= '0';
-					next_state <= dp_arrivedOnSouth4;
-				when dp_arrivedOnSouth4 =>
+					next_state <= dp_arrivedOnSouth6;
+				when dp_arrivedOnSouth6 =>
 					--Control VCC
-					s_vc_rnaSelI <= rsv_data_in(1 downto 0);
+					s_vc_rnaSelI <= rsv_data_in(1 downto 0);			--Value from RSV TABLE (PATH)
 					
-					--Acknowledge? 
+					--Acknowledge
 					s_CTRflg <= '1', '0' after 1 ns;
+					s_arbEnq <= '1', '0' after 1 ns;
 					next_state <= dp_arrivedOnWest1;
 	--*WEST ARRIVALS*--
 				when dp_arrivedOnWest1 =>
@@ -757,16 +783,29 @@ begin
 					adr_data_out <= w_rnaCtrl(17 downto 10);
 					next_state <= dp_arrivedOnWest3;
 				when dp_arrivedOnWest3 =>	
+					if(adr_nf = '1') then
+						next_state <= dp_arrivedOnWest4;
+					else
+						next_state <= dp_arrivedOnWest5;
+					end if;
+				when dp_arrivedOnWest4 =>
+					--Acknowledge back (discarding packet)
+					adr_search <= '0';
+					adr_nf_ack <= '1', '0' after 1 ns;
+					w_CTRflg <= '1', '0' after 1 ns;
+					next_state <= north1;
+				when dp_arrivedOnWest5 =>
 					address <= adr_result;			--should be the address found above
 					adr_search <= '0';
 					rsv_en <= '0';
-					next_state <= dp_arrivedOnWest4;
-				when dp_arrivedOnWest4 =>			
+					next_state <= dp_arrivedOnWest6;
+				when dp_arrivedOnWest6 =>
 					--Control VCC
-					w_vc_rnaSelI <= rsv_data_in(1 downto 0);
+					w_vc_rnaSelI <= rsv_data_in(1 downto 0);			--Value from RSV TABLE (PATH)
 					
-					--Acknowledge? 
+					--Acknowledge
 					w_CTRflg <= '1', '0' after 1 ns;
+					w_arbEnq <= '1', '0' after 1 ns;
 					next_state <= north1;
 				when others =>
 					next_state <= north1;
